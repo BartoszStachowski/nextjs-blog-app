@@ -1,29 +1,29 @@
-"use client";
+'use client';
 
-import { signUpSchema } from "@/app/schemas/auth";
-import { Button } from "@/components/ui/button";
+import { signUpSchema } from '@/app/schemas/auth';
+import { Button } from '@/components/ui/button';
 import {
   Card,
   CardContent,
   CardDescription,
   CardHeader,
   CardTitle,
-} from "@/components/ui/card";
+} from '@/components/ui/card';
 import {
   Field,
   FieldError,
   FieldGroup,
   FieldLabel,
-} from "@/components/ui/field";
-import { Input } from "@/components/ui/input";
-import { authClient } from "@/lib/auth-client";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { Loader2 } from "lucide-react";
-import { useRouter } from "next/navigation";
-import { useTransition } from "react";
-import { Controller, useForm } from "react-hook-form";
-import { toast } from "sonner";
-import z from "zod";
+} from '@/components/ui/field';
+import { Input } from '@/components/ui/input';
+import { authClient } from '@/lib/auth-client';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { Loader2 } from 'lucide-react';
+import { useRouter } from 'next/navigation';
+import { useTransition } from 'react';
+import { Controller, useForm } from 'react-hook-form';
+import { toast } from 'sonner';
+import z from 'zod';
 
 const SignUpPage = () => {
   const [isPending, startTransition] = useTransition();
@@ -33,9 +33,9 @@ const SignUpPage = () => {
   const form = useForm({
     resolver: zodResolver(signUpSchema),
     defaultValues: {
-      email: "",
-      name: "",
-      password: "",
+      email: '',
+      name: '',
+      password: '',
     },
   });
 
@@ -47,8 +47,8 @@ const SignUpPage = () => {
         password: data.password,
         fetchOptions: {
           onSuccess: () => {
-            toast.success("Account created successfully");
-            router.push("/");
+            toast.success('Account created successfully');
+            router.push('/');
           },
           onError: (error) => {
             toast.error(error.error.message);

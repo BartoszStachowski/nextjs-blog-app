@@ -1,33 +1,57 @@
-"use client";
+'use client';
 
-import { postSchema } from "@/app/schemas/blog";
-import { Button } from "@/components/ui/button";
+import { postSchema } from '@/app/schemas/blog';
+import { Button } from '@/components/ui/button';
 import {
   Card,
   CardContent,
   CardDescription,
   CardHeader,
   CardTitle,
-} from "@/components/ui/card";
+} from '@/components/ui/card';
 import {
   Field,
   FieldError,
   FieldGroup,
   FieldLabel,
-} from "@/components/ui/field";
-import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { Controller, useForm } from "react-hook-form";
+} from '@/components/ui/field';
+import { Input } from '@/components/ui/input';
+import { Textarea } from '@/components/ui/textarea';
+import { api } from '@/convex/_generated/api';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { useMutation } from 'convex/react';
+import { Loader2 } from 'lucide-react';
+import { useRouter } from 'next/navigation';
+import { useTransition } from 'react';
+import { Controller, useForm } from 'react-hook-form';
+import { toast } from 'sonner';
+import z from 'zod';
 
 const CreatePage = () => {
+  const [isPending, startTransition] = useTransition();
+  const router = useRouter();
+
+  const mutation = useMutation(api.posts.createPost);
   const form = useForm({
     resolver: zodResolver(postSchema),
     defaultValues: {
-      title: "",
-      content: "",
+      title: '',
+      content: '',
     },
   });
+
+  const onSubmit = (values: z.infer<typeof postSchema>) => {
+    startTransition(() => {
+      mutation({
+        body: values.content,
+        title: values.title,
+      });
+
+      toast.success('Everything was fine');
+
+      router.push('/');
+    });
+  };
 
   return (
     <div className="py-12">
@@ -46,7 +70,7 @@ const CreatePage = () => {
           <CardDescription>Create a new blog article</CardDescription>
         </CardHeader>
         <CardContent>
-          <form>
+          <form onSubmit={form.handleSubmit(onSubmit)}>
             <FieldGroup className="gap-y-4">
               <Controller
                 name="title"
@@ -84,7 +108,16 @@ const CreatePage = () => {
                 )}
               ></Controller>
 
-              <Button>Create post</Button>
+              <Button disabled={isPending}>
+                {isPending ? (
+                  <>
+                    <Loader2 className="size-4 animate-spin" />
+                    <span>Loading...</span>
+                  </>
+                ) : (
+                  <span>Create Post</span>
+                )}
+              </Button>
             </FieldGroup>
           </form>
         </CardContent>
