@@ -1,6 +1,6 @@
-import { mutation } from "./_generated/server";
-import { ConvexError, v } from "convex/values";
-import { authComponent } from "./auth";
+import { mutation } from './_generated/server';
+import { ConvexError, v } from 'convex/values';
+import { authComponent } from './auth';
 
 export const createPost = mutation({
   args: { title: v.string(), body: v.string() },
@@ -8,10 +8,10 @@ export const createPost = mutation({
     const user = await authComponent.safeGetAuthUser(ctx);
 
     if (!user) {
-      throw new ConvexError("Not authenticated");
+      throw new ConvexError('Not authenticated');
     }
 
-    const blogArticle = await ctx.db.insert("posts", {
+    const blogArticle = await ctx.db.insert('posts', {
       body: args.body,
       title: args.title,
       authorId: user._id,
