@@ -2,13 +2,56 @@
 
 import { useQuery } from 'convex/react';
 import { api } from '@/convex/_generated/api';
+import { Card, CardContent, CardFooter } from '@/components/ui/card';
+import Image from 'next/image';
+import Link from 'next/link';
+import { buttonVariants } from '@/components/ui/button';
 
 const BlogPage = () => {
   const data = useQuery(api.posts.getPosts);
   return (
-    <div>
-      <h1>Hello</h1>
-      <p>{data?.[0].title}</p>
+    <div className="py-12">
+      <div className="pb-12 text-center">
+        <h1 className="text-4xl font-extrabold tracking-tight sm:text-5xl">
+          Our Blog
+        </h1>
+        <p className="text-muted-foreground mx-auto max-w-2xl pt-4 text-xl">
+          Insights, thoughts and trends from our team.
+        </p>
+      </div>
+
+      <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+        {data?.map((post) => (
+          <Card key={post._id} className="pt-0">
+            <div className="relative h-48 w-full overflow-hidden">
+              <Image
+                src="https://images.unsplash.com/photo-1768815021727-dbed2f7d6aed?q=80&w=1740&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+                alt="image"
+                fill
+                className="rounded-t-lg"
+              />
+            </div>
+            <CardContent>
+              <Link href={`/blog/${post._id}`}>
+                <h1 className="hover:text-primary text-2xl font-bold">
+                  {post.title}
+                </h1>
+              </Link>
+              <p className="text-muted-foreground line-clamp-3">{post.body}</p>
+            </CardContent>
+            <CardFooter>
+              <Link
+                className={buttonVariants({
+                  className: 'w-full',
+                })}
+                href={`/blog/${post._id}`}
+              >
+                Read more
+              </Link>
+            </CardFooter>
+          </Card>
+        ))}
+      </div>
     </div>
   );
 };
