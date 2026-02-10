@@ -32,6 +32,7 @@ const CreatePage = () => {
     defaultValues: {
       title: '',
       content: '',
+      image: undefined,
     },
   });
 
@@ -44,10 +45,10 @@ const CreatePage = () => {
   return (
     <div className="py-12">
       <div className="mb-12 text-center">
-        <h1 className="font-extrabold text-4xl sm:text-5xl tracking-tight">
+        <h1 className="text-4xl font-extrabold tracking-tight sm:text-5xl">
           Create Post
         </h1>
-        <p className="pt-4 text-muted-foreground text-xl">
+        <p className="text-muted-foreground pt-4 text-xl">
           Share your thoughts with the big world
         </p>
       </div>
@@ -88,6 +89,29 @@ const CreatePage = () => {
                       aria-invalid={fieldState.invalid}
                       placeholder="Super cool blog content"
                       {...field}
+                    />
+                    {fieldState.invalid && (
+                      <FieldError errors={[fieldState.error]} />
+                    )}
+                  </Field>
+                )}
+              ></Controller>
+
+              <Controller
+                name="image"
+                control={form.control}
+                render={({ field, fieldState }) => (
+                  <Field>
+                    <FieldLabel>Image</FieldLabel>
+                    <Input
+                      aria-invalid={fieldState.invalid}
+                      placeholder="Super cool blog content"
+                      type="file"
+                      accept="image/*"
+                      onChange={(event) => {
+                        const file = event.target.files?.[0];
+                        field.onChange(file);
+                      }}
                     />
                     {fieldState.invalid && (
                       <FieldError errors={[fieldState.error]} />

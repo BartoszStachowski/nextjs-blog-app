@@ -8,6 +8,11 @@ const nextConfig: NextConfig = {
         protocol: 'https',
         port: '',
       },
+      {
+        hostname: 'beloved-shrimp-813.convex.cloud',
+        protocol: 'https',
+        port: '',
+      },
     ],
   },
 };
