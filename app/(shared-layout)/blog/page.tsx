@@ -7,6 +7,9 @@ import { api } from '@/convex/_generated/api';
 import { Suspense } from 'react';
 import { Skeleton } from '@/components/ui/skeleton';
 
+// force static page
+export const dynamic = 'force-static';
+
 const BlogPage = () => {
   return (
     <div className="py-12">
