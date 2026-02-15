@@ -6,6 +6,7 @@ import { api } from '@/convex/_generated/api';
 import { Id } from '@/convex/_generated/dataModel';
 import Image from 'next/image';
 import { Separator } from '@/components/ui/separator';
+import CommentSection from '@/components/web/CommentSection';
 
 interface PostIdRouteProps {
   params: Promise<{
@@ -61,7 +62,8 @@ const PostIdRoute = async ({ params }: PostIdRouteProps) => {
         {post.body}
       </p>
       <Separator className="my-8" />
-      comments section
+
+      <CommentSection />
     </div>
   );
 };
