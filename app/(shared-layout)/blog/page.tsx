@@ -1,3 +1,4 @@
+import type { Metadata } from 'next';
 import { Card, CardContent, CardFooter } from '@/components/ui/card';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -9,6 +10,14 @@ import { Skeleton } from '@/components/ui/skeleton';
 
 // force static page
 export const dynamic = 'force-static';
+export const revalidate = 30;
+
+export const metadata: Metadata = {
+  title: 'NextBlog',
+  description: 'Read our latest articles and insights',
+  category: 'Web development',
+  creator: 'Bartosz Stachowski',
+};
 
 const BlogPage = () => {
   return (
