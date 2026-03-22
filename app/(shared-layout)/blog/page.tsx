@@ -5,9 +5,9 @@ import Link from 'next/link';
 import { buttonVariants } from '@/components/ui/button';
 import { fetchQuery } from 'convex/nextjs';
 import { api } from '@/convex/_generated/api';
-// import { Suspense } from 'react';
-// import { Skeleton } from '@/components/ui/skeleton';
-// import { connection } from 'next/server';
+import { Suspense } from 'react';
+import { Skeleton } from '@/components/ui/skeleton';
+import { connection } from 'next/server';
 import { cacheLife, cacheTag } from 'next/cache';
 
 // force static page
@@ -34,19 +34,19 @@ const BlogPage = () => {
       </div>
 
       {/* because use useCache suspense is not required */}
-      {/*<Suspense fallback={<SkeletonLoadingUi />}>*/}
-      <LoadBlogList />
-      {/*</Suspense>*/}
+      <Suspense fallback={<SkeletonLoadingUi />}>
+        <LoadBlogList />
+      </Suspense>
     </div>
   );
 };
 
 const LoadBlogList = async () => {
   // It forces the code to wait for the request and ties the rendering process to the current connection/request.
-  // await connection();
-  'use cache';
-  cacheLife('hours');
-  cacheTag('blog');
+  await connection();
+  // 'use cache';
+  // cacheLife('hours');
+  // cacheTag('blog');
   const data = await fetchQuery(api.posts.getPosts);
 
   return (
@@ -88,19 +88,19 @@ const LoadBlogList = async () => {
   );
 };
 
-// const SkeletonLoadingUi = () => (
-//   <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-//     {[...Array(3)].map((_, i) => (
-//       <div className="flex flex-col space-y-3" key={i}>
-//         <Skeleton className="h-48 w-full rounded-xl" />
-//         <div className="flex flex-col space-y-2">
-//           <Skeleton className="h-6 w-3/4" />
-//           <Skeleton className="w-full h-4" />
-//           <Skeleton className="h-4 w-2/3" />
-//         </div>
-//       </div>
-//     ))}
-//   </div>
-// );
+const SkeletonLoadingUi = () => (
+  <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+    {[...Array(3)].map((_, i) => (
+      <div className="flex flex-col space-y-3" key={i}>
+        <Skeleton className="h-48 w-full rounded-xl" />
+        <div className="flex flex-col space-y-2">
+          <Skeleton className="h-6 w-3/4" />
+          <Skeleton className="h-4 w-full" />
+          <Skeleton className="h-4 w-2/3" />
+        </div>
+      </div>
+    ))}
+  </div>
+);
 
 export default BlogPage;
