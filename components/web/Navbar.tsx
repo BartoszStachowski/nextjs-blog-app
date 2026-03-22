@@ -47,7 +47,8 @@ const Navbar = () => {
                 fetchOptions: {
                   onSuccess: () => {
                     toast.success('Logged out successfully');
-                    router.push('/');
+                    router.replace('/');
+                    router.refresh();
                   },
                   onError: (error) => {
                     toast.error(error.error.message);
