@@ -3,6 +3,7 @@ import { getSessionCookie } from 'better-auth/cookies';
 
 export async function proxy(request: NextRequest) {
   const sessionCookie = getSessionCookie(request);
+  console.log('sessionCookie: ', sessionCookie);
 
   // THIS IS NOT SECURE!
   // This is the recommended approach to optimistically redirect users
