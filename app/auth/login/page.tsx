@@ -46,6 +46,7 @@ const LoginPage = () => {
           onSuccess: () => {
             toast.success('Logged in successfully');
             router.push('/');
+            router.refresh();
           },
           onError: (error) => {
             const errMsg =
