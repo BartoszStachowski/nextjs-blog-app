@@ -15,7 +15,7 @@ const nextConfig: NextConfig = {
         port: '',
       },
       {
-        hostname: 'precious-quail-577.convex.site',
+        hostname: 'precious-quail-577.convex.cloud',
         protocol: 'https',
         port: '',
       },
