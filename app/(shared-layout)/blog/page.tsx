@@ -7,7 +7,7 @@ import { fetchQuery } from 'convex/nextjs';
 import { api } from '@/convex/_generated/api';
 import { Suspense } from 'react';
 import { Skeleton } from '@/components/ui/skeleton';
-import { connection } from 'next/server';
+// import { connection } from 'next/server';
 import { cacheLife, cacheTag } from 'next/cache';
 
 // force static page
@@ -43,10 +43,10 @@ const BlogPage = () => {
 
 const LoadBlogList = async () => {
   // It forces the code to wait for the request and ties the rendering process to the current connection/request.
-  await connection();
-  // 'use cache';
-  // cacheLife('hours');
-  // cacheTag('blog');
+  // await connection();
+  'use cache';
+  cacheLife('hours');
+  cacheTag('blog');
   const data = await fetchQuery(api.posts.getPosts);
 
   return (
